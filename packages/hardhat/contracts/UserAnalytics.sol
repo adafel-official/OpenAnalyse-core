@@ -1,7 +1,9 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-contract UserAnalytics {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract UserAnalytics is Ownable {
 	uint256[][] public userActivityMatrix;
 	mapping(address => uint256) public addressToId;
 	mapping(uint256 => address) public idToAddress;
@@ -9,6 +11,7 @@ contract UserAnalytics {
 	mapping(bytes32 => uint256) public schemaIndex;
 	uint256 public latestIndex;
 	uint256 public totalCategories;
+  uint256 public userRewardPerDatapoint;
 
 	enum Category {
 		Gaming,
@@ -37,12 +40,13 @@ contract UserAnalytics {
 
 	Analytics[] public dappAnalytics;
 
-	constructor() {
+	constructor() Ownable() {
 		uint256[] memory initialMatrix;
 		userActivityMatrix.push(initialMatrix);
 		latestIndex = 0;
 		totalCategories = 7;
 		dappAnalytics.push();
+    userRewardPerDatapoint = 10000000000000000;
 	}
 
 	event NewAnalytics(address user, address provider, uint256 category);
@@ -68,13 +72,18 @@ contract UserAnalytics {
 		bytes32[] calldata columns,
 		Category category
 	) external {
-		// initializing schema with defaults
+		// Cannot have two schema with same name
+    require(schemaIndex[schemaName] == 0, "SCHEMA NAME EXISTS");
+
+    // initializing schema with defaults
 		Analytics storage analytics = dappAnalytics.push();
 		analytics.schemaName = schemaName;
 		analytics.schemaCategory = category;
-		uint256[] memory initialUser;
+		
+    uint256[] memory initialUser;
 		analytics.data.push(initialUser);
-		for (uint256 i = 0; i < columns.length; i++) {
+		
+    for (uint256 i = 0; i < columns.length; i++) {
 			analytics.data[0].push(0);
 			analytics.columns.push(columns[i]);
 			analytics.columnToIndex[columns[i]] = i;
@@ -129,7 +138,7 @@ contract UserAnalytics {
 		] += 1;
 
 		// rewarding the users for sharing data
-		bool sent = userAddress.send(10000000000000000);
+		bool sent = userAddress.send(userRewardPerDatapoint);
 		require(sent, "Failed to reward user");
 
 		// increasing credit limit for provider
@@ -185,7 +194,7 @@ contract UserAnalytics {
 		] += 1;
 
 		// rewarding the users for sharing data
-		bool sent = userAddress.send(10000000000000000);
+		bool sent = userAddress.send(userRewardPerDatapoint);
 		require(sent, "Failed to reward user");
 
 		// increasing credit limit for provider
@@ -197,6 +206,10 @@ contract UserAnalytics {
 			uint256(schemaAnalytics.schemaCategory)
 		);
 	}
+
+  function updateUserReward(uint256 newReward) external onlyOwner {
+    userRewardPerDatapoint = newReward;
+  }
 
 	function getUserActivityMatrix()
 		external
