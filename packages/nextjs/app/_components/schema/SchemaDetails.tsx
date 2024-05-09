@@ -88,7 +88,7 @@ export const SchemaDetails = ({ schemaList, odl }: SchemaDetailsProps) => {
             </div> */}
             <div className="flex">
               <div className="font-small">total records: </div>
-              <div className="font-extralight px-2">{i.totalRecords.toString()}</div>
+              <div className="font-extralight px-2">{(i.totalRecords - 1n).toString()}</div>
             </div>
           </div>
           <div className="flex justify-between gap-2 flex-wrap">
