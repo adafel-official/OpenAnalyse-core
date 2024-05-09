@@ -1,14 +1,77 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { CreateSchema } from "./_components/schema/CreateSchema";
 import { SchemaDetails } from "./_components/schema/SchemaDetails";
+import { Abi } from "abitype";
 import type { NextPage } from "next";
+import { createPublicClient, createWalletClient, custom, getContract, http } from "viem";
 import { useAccount } from "wagmi";
-import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
+import deployedContracts from "~~/contracts/deployedContracts";
 
 const Home: NextPage = () => {
   useAccount();
-  useDeployedContractInfo("UserAnalytics");
+
+  const [schemas, setSchemas] = useState<any>();
+  const [odl, setOdl] = useState<any>();
+
+  useEffect(() => {
+    const walletClient = createWalletClient({
+      chain: {
+        id: 22068238331863,
+        name: "odlSubnet",
+        nativeCurrency: {
+          name: "ODL Token",
+          symbol: "ODL",
+          decimals: 18,
+        },
+        rpcUrls: {
+          default: {
+            http: ["https://testnet-rpc.adafel.com"],
+          },
+        },
+      },
+      transport: custom(window.ethereum as any),
+    });
+
+    const publicClient = createPublicClient({
+      chain: {
+        id: 22068238331863,
+        name: "odlSubnet",
+        nativeCurrency: {
+          name: "Analyze Token",
+          symbol: "ALY",
+          decimals: 18,
+        },
+        rpcUrls: {
+          default: {
+            http: ["https://testnet-rpc.adafel.com"],
+          },
+        },
+      },
+      transport: http(),
+    });
+
+    const getSchemas = async () => {
+      try {
+        const userAnalyticsContractData = getContract({
+          abi: deployedContracts[22068238331863].UserAnalytics.abi as Abi,
+          address: deployedContracts[22068238331863].UserAnalytics.address,
+          client: { public: publicClient, wallet: walletClient },
+        });
+        setOdl(userAnalyticsContractData);
+
+        const schemas_ = await userAnalyticsContractData.read.getAllSchemas();
+
+        console.log(schemas_);
+        setSchemas(schemas_);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getSchemas();
+  }, []);
 
   return (
     <>
@@ -27,8 +90,8 @@ const Home: NextPage = () => {
                   <p className="my-0 text-sm">Schemas</p>
                 </div>
               </div>
-              <div className="p-5 divide-y divide-base-300">
-                <SchemaDetails />
+              <div className="p-5 divide-y divide-base-300 h-screen overflow-scroll">
+                <SchemaDetails schemaList={schemas} odl={odl} />
               </div>
             </div>
           </div>
@@ -40,35 +103,14 @@ const Home: NextPage = () => {
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                <CreateSchema />
+                <CreateSchema odl={odl} />
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            {/* <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div> */}
-          </div>
+          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row"></div>
         </div>
       </div>
     </>

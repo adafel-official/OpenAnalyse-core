@@ -10,7 +10,22 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.hardhat],
+  targetNetworks: [
+    {
+      id: 22068238331863,
+      name: "odlSubnet",
+      nativeCurrency: {
+        name: "Open Data Library Token",
+        symbol: "ODL",
+        decimals: 18,
+      },
+      rpcUrls: {
+        default: {
+          http: ["https://testnet-rpc.adafel.com"],
+        },
+      },
+    },
+  ],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)

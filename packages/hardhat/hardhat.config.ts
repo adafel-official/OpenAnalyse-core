@@ -118,6 +118,10 @@ const config: HardhatUserConfig = {
       url: "https://sepolia.publicgoods.network",
       accounts: [deployerPrivateKey],
     },
+    odlSubnet: {
+      url: "http://44.223.115.18:8545",
+      accounts: [deployerPrivateKey],
+    },
   },
   // configuration for harhdat-verify plugin
   etherscan: {

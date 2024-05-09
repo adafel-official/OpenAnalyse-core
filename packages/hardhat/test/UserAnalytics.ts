@@ -10,7 +10,7 @@ describe("UserAnalytics", function () {
 
   // const [owner, dapp1, dapp2, dapp3, dapp4, dapp5, user1, user2, user3, user4, user5] = await ethers.getSigners();
 
-  before(async () => {
+  beforeEach(async () => {
     const userAnalyticsFactory = await ethers.getContractFactory("UserAnalytics");
     UserAnalytics = (await userAnalyticsFactory.deploy()) as UserAnalytics;
     await UserAnalytics.waitForDeployment();
@@ -18,7 +18,7 @@ describe("UserAnalytics", function () {
 
   describe("Schema", function () {
     it("Should be able to create a new schema", async function () {
-      const schemaName = encodeBytes32String("schema1");
+      const schemaName = encodeBytes32String("schema1Test1");
       const column1 = encodeBytes32String("col1");
       const column2 = encodeBytes32String("col2");
       const column3 = encodeBytes32String("col3");
@@ -34,7 +34,7 @@ describe("UserAnalytics", function () {
 
   describe("AddAnalytics", function () {
     it("Should be able to add new user's analytics", async function () {
-      const schemaName = encodeBytes32String("schema1");
+      const schemaName = encodeBytes32String("schema1Test2");
       const column1 = encodeBytes32String("col1");
       const column2 = encodeBytes32String("col2");
       const column3 = encodeBytes32String("col3");
@@ -62,6 +62,10 @@ describe("UserAnalytics", function () {
       expect(finalUserBalance - initialUserBalance).to.equal(10000000000000000n);
 
       expect(await UserAnalytics.consumerCredits(dapp1.address)).to.equal(1);
+
+      expect(await UserAnalytics.getSchemaAddressToId(schemaName, user1.address)).to.equal(1);
+
+      expect(await UserAnalytics.getSchemaIdToAddress(schemaName, 1)).to.equal(user1.address);
     });
   });
 
@@ -112,6 +116,13 @@ describe("UserAnalytics", function () {
       await UserAnalytics.connect(dapp4).addAnalytics(user4.address, schemaName4, [schema4Column1], [1n], {
         value: 10000000000000000n,
       });
+
+      expect(await UserAnalytics.getAllSchemas()).to.deep.equal([
+        [schemaName1, [schema1Column1, schema1Column2, schema1Column3], 0n, 2n],
+        [schemaName2, [schema2Column1, schema2Column2, schema2Column3], 1, 2],
+        [schemaName3, [schema3Column1, schema3Column2, schema3Column3], 0n, 2n],
+        [schemaName4, [schema4Column1, schema4Column2, schema4Column3], 1n, 2n],
+      ]);
 
       expect(await UserAnalytics.getRecommendedFollowers(user1.address, 1)).to.deep.equal([
         ["0x0000000000000000000000000000000000000000"],

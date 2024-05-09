@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { toBytes, toHex } from "viem";
+import { useAccount } from "wagmi";
+import { TransactionHash } from "~~/app/dataexplorer/[schema]/_components";
 import { InputBase } from "~~/components/scaffold-eth";
 
-export const CreateSchema = () => {
+type CreateSchemaProps = {
+  odl: any;
+};
+export const CreateSchema = ({ odl }: CreateSchemaProps) => {
   const [schemaName, setSchemaName] = useState("My Schema");
   const [totalCol, setTotalCol] = useState("0");
-  const [col, setCol] = useState<Record<string, any>>();
+  const [col, setCol] = useState<Record<number, string>>();
   const [selectedCategory, setSelectedCategory] = useState<number>();
+  const [loading, setLoading] = useState(false);
+  const [txErrored, setTxErrored] = useState(false);
+  const [txHash, setTxHash] = useState("");
 
   const categories = [...Array(7).keys()];
-
   const categoryDappMap = {
     0: "Gaming",
     1: "Marketplace",
@@ -18,6 +26,43 @@ export const CreateSchema = () => {
     5: "Identity",
     6: "Certificates",
   };
+
+  const account = useAccount();
+
+  const addSchemaTxn = useCallback(async () => {
+    setLoading(true);
+    try {
+      const columnArray = [...Array(parseInt(totalCol)).keys()].map(i => {
+        return toHex(
+          toBytes(String(col?.[i]), {
+            size: 32,
+          }),
+        );
+      });
+
+      console.log(account.address);
+
+      const tx = await odl?.write.addSchema(
+        [
+          toHex(
+            toBytes(schemaName, {
+              size: 32,
+            }),
+          ),
+          columnArray,
+          BigInt(Number(selectedCategory)),
+        ],
+        { account: account.address },
+      );
+      setTxHash(tx);
+      setTxErrored(false);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      setTxErrored(true);
+      console.log(e);
+    }
+  }, [account.address, col, odl?.write, schemaName, selectedCategory, totalCol]);
 
   return (
     <>
@@ -86,7 +131,18 @@ export const CreateSchema = () => {
             </>
           )}
         </div>
-        <button className="btn btn-secondary btn-sm">Save</button>
+        {txHash ? (
+          <div className="flex flex-col gap-3 py-5 first:pt-0 last:pb-1">
+            <p className="font-medium my-0 break-words">Transaction Successful!</p>
+            <div className="flex">
+              <TransactionHash hash={txHash} />
+            </div>
+          </div>
+        ) : null}
+        <button className="btn btn-secondary btn-sm" onClick={addSchemaTxn} disabled={loading}>
+          {txErrored ? "Failed to save, try again!" : "Save"}
+          {loading && <span className="loading loading-spinner loading-xs"></span>}
+        </button>
       </div>
     </>
   );

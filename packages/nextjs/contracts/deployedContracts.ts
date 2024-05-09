@@ -5,9 +5,9 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  31337: {
+  22068238331863: {
     UserAnalytics: {
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      address: "0xbe7D63fDeE3c849faDCea8710317DE854d723C0d",
       abi: [
         {
           inputs: [],
@@ -185,6 +185,41 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "getAllSchemas",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schemaName",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32[]",
+                  name: "columns",
+                  type: "bytes32[]",
+                },
+                {
+                  internalType: "enum UserAnalytics.Category",
+                  name: "schemaCategory",
+                  type: "uint8",
+                },
+                {
+                  internalType: "uint256",
+                  name: "totalRecords",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct UserAnalytics.SchemaDetails[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "bytes32",
@@ -241,6 +276,54 @@ const deployedContracts = {
               internalType: "address[][]",
               name: "",
               type: "address[][]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "schemaName",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "userAddress",
+              type: "address",
+            },
+          ],
+          name: "getSchemaAddressToId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "schemaName",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "userId",
+              type: "uint256",
+            },
+          ],
+          name: "getSchemaIdToAddress",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
             },
           ],
           stateMutability: "view",

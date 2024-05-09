@@ -23,6 +23,13 @@ contract UserAnalytics is Ownable {
 		Certificates
 	}
 
+  struct SchemaDetails {
+    bytes32 schemaName;
+		bytes32[] columns;
+		Category schemaCategory;
+    uint256 totalRecords;
+  }
+
 	struct Analytics {
 		bytes32 schemaName;
 		bytes32[] columns;
@@ -73,7 +80,7 @@ contract UserAnalytics is Ownable {
 		Category category
 	) external {
 		// Cannot have two schema with same name
-    require(schemaIndex[schemaName] == 0, "SCHEMA NAME EXISTS");
+    require(schemaIndex[schemaName] == uint256(0), "SCHEMA NAME EXISTS");
 
     // initializing schema with defaults
 		Analytics storage analytics = dappAnalytics.push();
@@ -219,6 +226,21 @@ contract UserAnalytics is Ownable {
 		return userActivityMatrix;
 	}
 
+  function getAllSchemas() external view returns (SchemaDetails[] memory) {
+    SchemaDetails[] memory schemaDetails = new SchemaDetails[](dappAnalytics.length - 1);
+    for (uint256 i = 1; i < dappAnalytics.length; i++) {
+      // bytes32[] memory schemaColumns = new bytes32[](dappAnalytics[i].columns.length);
+      SchemaDetails memory schemaDetail;
+      schemaDetail.schemaName = dappAnalytics[i].schemaName;
+      schemaDetail.columns = dappAnalytics[i].columns;
+      schemaDetail.schemaCategory = dappAnalytics[i].schemaCategory;
+      schemaDetail.totalRecords = dappAnalytics[i].data.length;
+      schemaDetails[i - 1] = schemaDetail;
+    }
+
+    return schemaDetails;
+  }
+
 	function getAnalyticsDataBySchemaName(
 		bytes32 schemaName
 	) external view returns (uint256[][] memory) {
@@ -230,6 +252,20 @@ contract UserAnalytics is Ownable {
 	) external view returns (bytes32[] memory) {
 		return dappAnalytics[schemaIndex[schemaName]].columns;
 	}
+
+  function getSchemaAddressToId(
+    bytes32 schemaName,
+    address userAddress
+  ) external view returns (uint256) {
+    return dappAnalytics[schemaIndex[schemaName]].addressToId[userAddress];
+  }
+
+  function getSchemaIdToAddress(
+    bytes32 schemaName,
+    uint256 userId
+  ) external view returns (address) {
+    return dappAnalytics[schemaIndex[schemaName]].idToAddress[userId];
+  }
 
 	function getRecommendedFollowers(
 		address userAddress,
