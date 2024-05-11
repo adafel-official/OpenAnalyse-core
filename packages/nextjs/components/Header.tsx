@@ -19,6 +19,10 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Home",
     href: "/",
   },
+  {
+    label: "Docs",
+    href: "https://docs.adafel.com",
+  },
   // {
   //   label: "Debug Contracts",
   //   href: "/debug",

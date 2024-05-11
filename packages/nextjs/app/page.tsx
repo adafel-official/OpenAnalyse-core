@@ -79,7 +79,7 @@ const Home: NextPage = () => {
         <div className="px-5">
           <h1 className="text-center">
             <span className="block text-4xl font-bold">Open Data Library (ODL)</span>
-            <span className="block text-2xl mb-2">Explorer</span>
+            <span className="block text-2xl mb-2">Dashboard</span>
           </h1>
         </div>
         <div className="grid grid-cols-2 gap-10 w-full max-w-7xl">
