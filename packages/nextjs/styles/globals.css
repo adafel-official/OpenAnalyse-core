@@ -14,13 +14,12 @@
   background: radial-gradient(circle, #4d004d, black);
 } */
 .adafelbg {
-  background: linear-gradient(to right, #404142, #2c2d2e);
-  /* padding: 0;
-  margin: 0;
-  justify-content: center;
-  align-items: center; */
-
+  background: linear-gradient(to right, #404142, #1c1c34);
+  /* Starts at the top left (135 degrees) and goes to the bottom right */
+  /* The purple (#6741D9) is centered but subtle, positioned at 50% */
 }
+
+
 .glossy-background {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
