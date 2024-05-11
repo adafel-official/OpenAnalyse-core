@@ -1,7 +1,6 @@
 import React from "react";
 import { hardhat } from "viem/chains";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import { SwitchTheme } from "~~/components/SwitchTheme";
 import { BuidlGuidlLogo } from "~~/components/assets/BuidlGuidlLogo";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 
@@ -10,7 +9,7 @@ import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
  */
 export const Footer = () => {
   const { targetNetwork } = useTargetNetwork();
-  const isLocalNetwork = targetNetwork.id === hardhat.id;
+  // const isLocalNetwork = targetNetwork.id === hardhat.id;
 
   return (
     <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0">
@@ -35,7 +34,6 @@ export const Footer = () => {
               </>
             )} */}
           </div>
-          <SwitchTheme className={`pointer-events-auto ${isLocalNetwork ? "self-end md:self-auto" : ""}`} />
         </div>
       </div>
       <div className="w-full">
