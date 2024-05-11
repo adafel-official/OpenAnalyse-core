@@ -71,7 +71,7 @@ export const SchemaDetails = ({ schemaList, odl }: SchemaDetailsProps) => {
           <p className="font-medium my-0 break-words">{fromHex(i.schemaName, "string")}</p>
           <div className="flex-col gap-y-1">
             <div className="flex">
-              <div className="font-small">columns: </div>
+              <div className="font-small ">columns: </div>
               <div className="font-extralight px-2">{i.columns.map(c => fromHex(c, "string")).join(", ")}</div>
             </div>
             <div className="flex">
