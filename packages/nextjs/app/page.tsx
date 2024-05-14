@@ -5,7 +5,7 @@ import { CreateSchema } from "./_components/schema/CreateSchema";
 import { SchemaDetails } from "./_components/schema/SchemaDetails";
 import { Abi } from "abitype";
 import type { NextPage } from "next";
-import { createPublicClient, createWalletClient, custom, getContract, http } from "viem";
+import { WalletClient, createPublicClient, createWalletClient, custom, getContract, http } from "viem";
 import { useAccount } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
 
@@ -16,23 +16,26 @@ const Home: NextPage = () => {
   const [odl, setOdl] = useState<any>();
 
   useEffect(() => {
-    const walletClient = createWalletClient({
-      chain: {
-        id: 1849857664505656,
-        name: "Adafel Testnet Network",
-        nativeCurrency: {
-          name: "Analyze Token",
-          symbol: "ALY",
-          decimals: 18,
-        },
-        rpcUrls: {
-          default: {
-            http: ["https://testnet-rpc.adafel.com"],
+    let walletClient: WalletClient;
+    if (window.ethereum) {
+      walletClient = createWalletClient({
+        chain: {
+          id: 1849857664505656,
+          name: "Adafel Testnet Network",
+          nativeCurrency: {
+            name: "Analyze Token",
+            symbol: "ALY",
+            decimals: 18,
+          },
+          rpcUrls: {
+            default: {
+              http: ["https://testnet-rpc.adafel.com"],
+            },
           },
         },
-      },
-      transport: custom(window.ethereum as any),
-    });
+        transport: custom(window.ethereum as any),
+      });
+    }
 
     const publicClient = createPublicClient({
       chain: {
