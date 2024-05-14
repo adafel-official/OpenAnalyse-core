@@ -116,10 +116,8 @@ export const CreateSchema = ({ odl }: CreateSchemaProps) => {
                   <div className="flex flex-row gap-2 w-full max-w-7xl pb-1 px-6 lg:px-10 flex-wrap">
                     {categories.map(category => (
                       <button
-                        className={`btn btn-secondary btn-sm font-light hover:border-transparent ${
-                          category === selectedCategory
-                            ? "bg-base-300 hover:bg-base-300 no-animation"
-                            : "bg-base-100 hover:bg-secondary"
+                        className={`catbutton font-light hover:border-transparent ${
+                          category === selectedCategory ? "text-white buttoneffect" : "text-gray-300"
                         }`}
                         key={category}
                         onClick={() => setSelectedCategory(category)}

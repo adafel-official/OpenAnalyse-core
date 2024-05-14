@@ -15,7 +15,7 @@
 } */
 .adafelbg {
   background: linear-gradient(to right, #404142, #1c1c34);
-  /* Starts at the top left (135 degrees) and goes to the bottom right */
+  /* Starts at the top left (135 degrees) and goes to the bottom right  404142 */
   /* The purple (#6741D9) is centered but subtle, positioned at 50% */
 }
 
@@ -84,22 +84,22 @@ p {
 }
 
 .button {
-  background: #6741D9; /* Initial background color (dark purple) */
-  color: white; /* Text color */
-  border: none; /* No border */
-  padding: 10px 20px; /* Padding around the text */
-  border-radius: 20px; /* Rounded corners */
-  font-weight: bold; /* Bold text */
-  text-transform: uppercase; /* Uppercase text */
-  cursor: pointer; /* Pointer cursor on hover */
-  outline: none; /* Remove outline */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for background and shadow */
+  background: #6741D9; 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 20px; 
+  font-weight: bold; 
+  text-transform: uppercase; 
+  cursor: pointer; 
+  outline: none; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+  transition: background-color 0.3s, box-shadow 0.3s; 
 }
 
 .button:hover {
-  background: #FC49AB; /* Background color on hover (vibrant pink) */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Brighter shadow on hover */
+  background: #FC49AB; 
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); 
 }
 
 .gloss-effect {
@@ -115,8 +115,8 @@ p {
   right: 0;
   bottom: 0;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
-  border-radius: 9999px; /* rounded-full equivalent */
-  pointer-events: none; /* Ensure clicks pass through to the link */
+  border-radius: 9999px; 
+  pointer-events: none; 
 }
 .bg-base-300 {
 color: white;
@@ -133,19 +133,68 @@ background: linear-gradient(to right, #404142, #2c2d2e);
 }
 
 .btn.btn-secondary.btn-sm {
-  background: #6741D9 !important; /* Initial background color (dark purple) */
-  color: white !important; /* Text color */
-  border: none !important; /* No border */
-  padding: 10px 20px !important; /* Padding around the text */
-  border-radius: 20px !important; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  outline: none !important; /* Remove outline */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important; /* Subtle shadow */
-  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for background and shadow */
-  font-size: 0.875rem; /* Match the 'btn-sm' font size */
+  background: #6741D9 !important; 
+  color: white !important; 
+  border: none !important; 
+  padding: 10px 20px !important; 
+  border-radius: 20px !important; 
+  cursor: pointer; 
+  outline: none !important; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important; 
+  transition: background-color 0.3s, box-shadow 0.3s; 
+  font-size: 0.875rem; 
 }
 
 .btn.btn-secondary.btn-sm:hover {
   background: #FC49AB !important; /* Background color on hover (vibrant pink) */
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.5) !important; /* Brighter shadow on hover */
+}
+
+.btn.btn-secondary.btn-sm:active {
+  background-color: #FC49AB;
+  border-color: #545b62;
+}
+
+.catbutton{
+  background: #6741D9;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, box-shadow 0.3s; 
+}
+
+.buttoneffect {
+  position: relative;
+  color: white;
+  z-index: 1;
+}
+
+.buttoneffect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(252, 73, 171, 0.8), transparent);
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 0; /* Place the ::after element behind the button text */
+}
+.btn.selected {
+  background-color: #D3D3D3; /* Change this to your desired color */
+  border-color: transparent;
+  color: #000000; /* Optional: Change text color when selected */
+}
+
+.btn:not(.selected):hover {
+  background-color: #FFD700; /* Change this to your desired hover color */
+  border-color: transparent;
+}
+
+/* Optionally, you can add more styles for better visual feedback */
+.btn.selected:hover {
+  background-color: #C0C0C0; /* Change this to your desired hover color when selected */
+  border-color: transparent;
 }
