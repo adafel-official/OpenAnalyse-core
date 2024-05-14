@@ -12,11 +12,11 @@ const scaffoldConfig = {
   // The networks on which your DApp is live
   targetNetworks: [
     {
-      id: 22068238331863,
-      name: "odlSubnet",
+      id: 1849857664505656,
+      name: "Adafel Testnet",
       nativeCurrency: {
-        name: "Open Data Library Token",
-        symbol: "ODL",
+        name: "Adafel Token",
+        symbol: "ADFL",
         decimals: 18,
       },
       rpcUrls: {

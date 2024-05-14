@@ -31,8 +31,8 @@ const AddressPage = ({ params }: PageProps) => {
   useEffect(() => {
     const publicClient = createPublicClient({
       chain: {
-        id: 22068238331863,
-        name: "odlSubnet",
+        id: 1849857664505656,
+        name: "Adafel Testnet Network",
         nativeCurrency: {
           name: "Analyze Token",
           symbol: "ALY",
@@ -50,8 +50,8 @@ const AddressPage = ({ params }: PageProps) => {
     const getSchemaData = async () => {
       try {
         const userAnalyticsContractData = getContract({
-          abi: deployedContracts[22068238331863].UserAnalytics.abi as Abi,
-          address: deployedContracts[22068238331863].UserAnalytics.address,
+          abi: deployedContracts[1849857664505656].UserAnalytics.abi as Abi,
+          address: deployedContracts[1849857664505656].UserAnalytics.address,
           client: { public: publicClient },
         });
 

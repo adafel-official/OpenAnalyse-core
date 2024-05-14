@@ -39,9 +39,15 @@ export const CreateSchema = ({ odl }: CreateSchemaProps) => {
           }),
         );
       });
-
-      console.log(account.address);
-
+      console.log([
+        toHex(
+          toBytes(schemaName, {
+            size: 32,
+          }),
+        ),
+        columnArray,
+        Number(selectedCategory),
+      ]);
       const tx = await odl?.write.addSchema(
         [
           toHex(
@@ -50,7 +56,7 @@ export const CreateSchema = ({ odl }: CreateSchemaProps) => {
             }),
           ),
           columnArray,
-          BigInt(Number(selectedCategory)),
+          Number(selectedCategory),
         ],
         { account: account.address },
       );

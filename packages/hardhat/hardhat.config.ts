@@ -118,7 +118,7 @@ const config: HardhatUserConfig = {
       url: "https://sepolia.publicgoods.network",
       accounts: [deployerPrivateKey],
     },
-    odlSubnet: {
+    adafelTestnet: {
       url: "http://44.223.115.18:8545",
       accounts: [deployerPrivateKey],
     },
