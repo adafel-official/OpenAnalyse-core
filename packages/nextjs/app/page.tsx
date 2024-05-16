@@ -23,8 +23,8 @@ const Home: NextPage = () => {
           id: 1849857664505656,
           name: "Adafel Testnet Network",
           nativeCurrency: {
-            name: "Analyze Token",
-            symbol: "ALY",
+            name: "Adafel Testnet Token",
+            symbol: "ADFL",
             decimals: 18,
           },
           rpcUrls: {
@@ -42,8 +42,8 @@ const Home: NextPage = () => {
         id: 1849857664505656,
         name: "Adafel Testnet Network",
         nativeCurrency: {
-          name: "Analyze Token",
-          symbol: "ALY",
+          name: "Adafel Token",
+          symbol: "ADFL",
           decimals: 18,
         },
         rpcUrls: {
