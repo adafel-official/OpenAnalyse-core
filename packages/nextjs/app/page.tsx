@@ -94,7 +94,7 @@ const Home: NextPage = () => {
                   <p className="my-0 text-sm">Schemas</p>
                 </div>
               </div>
-              <div className="p-5 divide-y divide-base-300 h-screen ">
+              <div className="p-5 divide-y divide-base-300 h-screen overflow-scroll">
                 {/* Use only if required overflow-scroll */}
                 <SchemaDetails schemaList={schemas} odl={odl} />
               </div>
