@@ -45,7 +45,9 @@ export const queryClient = new QueryClient({
 });
 
 export const ScaffoldEthAppWithProviders = ({ children }: { children: React.ReactNode }) => {
-  const { resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
+  setTheme("dark");
+
   const isDarkMode = resolvedTheme === "dark";
   const [mounted, setMounted] = useState(false);
 
