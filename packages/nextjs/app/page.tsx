@@ -58,8 +58,8 @@ const Home: NextPage = () => {
     const getSchemas = async () => {
       try {
         const userAnalyticsContractData = getContract({
-          abi: deployedContracts[1849857664505656].UserAnalytics.abi as Abi,
-          address: deployedContracts[1849857664505656].UserAnalytics.address,
+          abi: deployedContracts[1849857664505656].DataLayer.abi as Abi,
+          address: deployedContracts[1849857664505656].DataLayer.address,
           client: { public: publicClient, wallet: walletClient },
         });
         setOdl(userAnalyticsContractData);
