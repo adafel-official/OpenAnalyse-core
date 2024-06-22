@@ -9,7 +9,7 @@ const baseUrl = process.env.VERCEL_URL
   : `http://localhost:${process.env.PORT || 3000}`;
 const imageUrl = `${baseUrl}/thumbnail.jpg`;
 
-const title = "Open Data Library ";
+const title = "Adafel Demo Dashboard";
 const titleTemplate = "%s | Adafel";
 const description = "Built by Adafel";
 
